@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatApp - Home</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 15px 0;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+
+        .chat-list {
+            margin-top: 20px;
+        }
+
+        .chat-list h2 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            color: #007bff;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chat {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            background-color: #f1f3f5;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .chat:hover {
+            background-color: #e9ecef;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid #007bff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-info h3 {
+            margin-bottom: 5px;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .chat-info p {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Welcome, {{ request.user.username }}!</h1>
+        </header>
+        <div class="chat-list">
+            <h2>Your Chats</h2>
+            {% for friend in friends %}
+            <div class="chat d-flex align-items-center">
+                <img src="{{ friend.profile_pic_url }}" alt="{{ friend.profile }}'s profile picture" class="profile-pic">
+                <div class="chat-info">
+                    <h3>{{ friend.profile }}</h3>
+                    <p>{{ friend.last_message_preview }}</p>
+                </div>
+                <a href="{% url 'detail' friend.profile.id %}" class="btn btn-custom ml-auto">Message</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ friend.profile.name }}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .chat-header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .chat-window {
+            border: 1px solid #dee2e6;
+            border-radius: 0 0 8px 8px;
+            height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #ffffff;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .message.sender {
+            justify-content: flex-end;
+        }
+
+        .message.receiver {
+            justify-content: flex-start;
+        }
+
+        .message-text {
+            max-width: 60%;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .message.sender .message-text {
+            background-color: #e2f0ff;
+            border-top-right-radius: 0;
+        }
+
+        .message.receiver .message-text {
+            background-color: #f1f1f1;
+            border-top-left-radius: 0;
+        }
+
+        .message-input {
+            margin-top: 20px;
+            display: flex;
+        }
+
+        .message-input textarea {
+            flex: 1;
+            border-radius: 20px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            resize: none;
+        }
+
+        .message-input button {
+            margin-left: 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 20px;
+            padding: 10px 20px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chat-header text-center">
+            <h3>Chat with {{ friend.profile.name }}</h3>
+        </div>
+        <div class="chat-window">
+            <!-- Display messages -->
+            {% for chat in chats %}
+                {% if chat.sender == user and chat.recipient == profile %}
+                    <div class="message sender">
+                        <div class="message-text">
+                            {{ chat.content }}
+                        </div>
+                    </div>
+                {% elif chat.recipient == user and chat.sender == profile %}
+                    <div class="message receiver">
+                        <div class="message-text">
+                            {{ chat.content }}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <form action="" id="myform" method="POST">
+            {% csrf_token %}
+            {{ form.content }}
+            <button class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; background: linear-gradient(135deg, #007bff, #0056b3); border-radius: 50px; border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); color: white; transition: transform 0.2s;">Send</button>
+        </form>
+
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
