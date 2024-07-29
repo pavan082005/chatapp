@@ -12,7 +12,7 @@ class Profile(models.Model):
 
 class Friend(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
-
+ #   is_friend = models.BooleanField(default=False)
     def __str__(self):
         return self.profile.name
 

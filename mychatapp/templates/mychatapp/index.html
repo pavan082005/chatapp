@@ -110,6 +110,11 @@
             color: #6c757d;
         }
 
+        .btn-container {
+            display: flex;
+            gap: 10px;
+        }
+
         .btn-custom {
             background-color: #007bff;
             color: #ffffff;
@@ -119,6 +124,17 @@
 
         .btn-custom:hover {
             background-color: #0056b3;
+        }
+
+        .btn-block {
+            background-color: #dc3545;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+
+        .btn-block:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -145,7 +161,10 @@
                     <h3>{{ friend.profile }}</h3>
                     <p>{{ friend.last_message_preview }}</p>
                 </div>
-                <a href="{% url 'detail' friend.profile.id %}" class="btn btn-custom ml-auto">Message</a>
+                <div class="ml-auto btn-container">
+                    <a href="{% url 'detail' friend.profile.id %}" class="btn btn-custom">Message</a>
+                
+                </div>
             </div>
             {% endfor %}
         </div>

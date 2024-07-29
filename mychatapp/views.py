@@ -133,3 +133,5 @@ def signout(request):
         # Redirect to the login page or another page after logout
         return redirect('register')  # Replace 'login' with the name of your login URL
     return redirect('index')  # Replace 'index' with the name of your home page URL
+
+

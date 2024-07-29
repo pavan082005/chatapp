@@ -11,4 +11,5 @@ urlpatterns = [
     path('friends/<str:pk>', views.detail, name = 'detail'),
     path('add_friend', views.add_friend, name = 'add_friend'),
     path('signout', views.signout, name = 'signout'),
+  #  path('block/<int:profile_id>/', views.block_user, name='block_user'),
 ]
