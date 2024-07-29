@@ -20,6 +20,9 @@
             color: #ffffff;
             padding: 15px;
             border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .chat-window {
@@ -84,12 +87,27 @@
             padding: 10px 20px;
             border: none;
         }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="chat-header text-center">
+        <div class="chat-header">
             <h3>Chat with {{ friend.profile.name }}</h3>
+            <a href="{% url 'index' %}" class="btn btn-back">Back to Chats</a>
         </div>
         <div class="chat-window">
             <!-- Display messages -->
@@ -115,7 +133,6 @@
             {{ form.content }}
             <button class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; background: linear-gradient(135deg, #007bff, #0056b3); border-radius: 50px; border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); color: white; transition: transform 0.2s;">Send</button>
         </form>
-
     </div>
 
     <!-- Bootstrap JS and dependencies -->

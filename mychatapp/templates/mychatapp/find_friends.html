@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatApp - Home</title>
-    <!-- Bootstrap CSS -->
+    <title>Find Friends</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             background-color: #f8f9fa;
             font-family: 'Arial', sans-serif;
         }
-
         .container {
             background: #ffffff;
             border-radius: 10px;
@@ -19,7 +17,6 @@
             margin-top: 30px;
             padding: 20px 30px;
         }
-
         .header {
             display: flex;
             justify-content: space-between;
@@ -30,45 +27,27 @@
             border-radius: 10px 10px 0 0;
             margin: -30px -30px 20px -30px;
         }
-
         .header h1 {
             margin: 0;
             font-size: 24px;
             font-weight: bold;
         }
-
-        .header .btn-container {
-            display: flex;
-            gap: 10px;
-        }
-
-        .header .btn-signout,
-        .header .btn-findfriends {
-            background-color: #ffffff;
-            color: #007bff;
-            border: none;
+        .btn-back {
+            background-color: #6c757d;
+            color: #ffffff;
             border-radius: 20px;
             padding: 5px 15px;
             font-size: 14px;
             font-weight: bold;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s;
         }
-
-        .header .btn-signout:hover,
-        .header .btn-findfriends:hover {
-            background-color: #007bff;
-            color: #ffffff;
+        .btn-back:hover {
+            background-color: #5a6268;
         }
-
-        .chat-list h2 {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            color: #007bff;
-            text-align: center;
-            font-weight: bold;
+        .friend-list {
+            margin-top: 20px;
         }
-
-        .chat {
+        .friend {
             display: flex;
             align-items: center;
             padding: 15px;
@@ -79,12 +58,10 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
         }
-
-        .chat:hover {
+        .friend:hover {
             background-color: #e9ecef;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
-
         .profile-pic {
             width: 60px;
             height: 60px;
@@ -93,30 +70,25 @@
             border: 2px solid #007bff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
-        .chat-info {
+        .friend-info {
             flex: 1;
         }
-
-        .chat-info h3 {
+        .friend-info h3 {
             margin-bottom: 5px;
             font-size: 18px;
             color: #333;
             font-weight: bold;
         }
-
-        .chat-info p {
+        .friend-info p {
             font-size: 14px;
             color: #6c757d;
         }
-
         .btn-custom {
             background-color: #007bff;
             color: #ffffff;
             border-radius: 20px;
             padding: 5px 15px;
         }
-
         .btn-custom:hover {
             background-color: #0056b3;
         }
@@ -125,33 +97,26 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>Welcome, {{ request.user.username }}!</h1>
-            <div class="btn-container">
-                <!-- Button to Find Friends -->
-                <a href="{% url 'find_friends' %}" class="btn btn-findfriends">Find Friends</a>
-                <!-- Sign Out Button -->
-                <form method="POST" action="{% url 'signout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-signout">Sign Out</button>
-                </form>
-            </div>
+            <h1>Find Friends</h1>
+            <a href="{% url 'index' %}" class="btn btn-back">Back to Chats</a>
         </header>
-        <div class="chat-list">
-            <h2>Your Chats</h2>
+        <div class="friend-list">
             {% for friend in friends %}
-            <div class="chat">
-                <img src="{{ friend.profile_pic_url }}" alt="{{ friend.profile }}'s profile picture" class="profile-pic">
-                <div class="chat-info">
-                    <h3>{{ friend.profile }}</h3>
-                    <p>{{ friend.last_message_preview }}</p>
+            <div class="friend">
+                <img src="{{ friend.profile_pic_url }}" alt="{{ friend.profile.name }}'s profile picture" class="profile-pic">
+                <div class="friend-info">
+                    <h3>{{ friend.profile.name }}</h3>
+                    <p>Some info about {{ friend.profile.name }}...</p>
                 </div>
-                <a href="{% url 'detail' friend.profile.id %}" class="btn btn-custom ml-auto">Message</a>
+                  <form method="POST" action="{% url 'add_friend' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="friend_id" value="{{ friend.profile.id }}">
+                    <button type="submit" class="btn btn-custom">Add</button>
+                </form>
             </div>
             {% endfor %}
         </div>
     </div>
-
-    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
